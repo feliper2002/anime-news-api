@@ -11,10 +11,15 @@ class AnimeController {
 
   AnimeController(this._getAnimePostUsecase);
 
+  int page = 1;
+
+  incrementPage() {
+    page++;
+  }
+
+  List<AnimePost> posts = <AnimePost>[];
   Future<List<AnimePost>> getAnimePost([int page = 1, int perPage = 10]) async {
     final response = await _getAnimePostUsecase(page, perPage);
-
-    List<AnimePost> posts = <AnimePost>[];
 
     response.fold((exception) {
       if (exception is UnprocessableEntityFailure) {
@@ -31,7 +36,7 @@ class AnimeController {
       }
     }, (_lista) {
       posts = _lista;
-      return _lista;
+      return posts;
     });
     return posts;
   }
