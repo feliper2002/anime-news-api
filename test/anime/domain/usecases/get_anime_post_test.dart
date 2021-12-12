@@ -4,7 +4,7 @@ import 'package:intoxianimeapi/core/error/failure.dart';
 import 'package:intoxianimeapi/home/domain/usecases/get_anime_post.dart';
 import 'package:intoxianimeapi/home/infra/repositories/anime_repository.dart';
 import 'package:intoxianimeapi/home/presenter/models/anime_model.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 class AnimeRepositoryMock extends Mock implements AnimeRepositoryImpl {}
 
