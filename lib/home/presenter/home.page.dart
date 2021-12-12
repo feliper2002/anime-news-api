@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:intoxianimeapi/home/controllers/anime_controller.dart';
-import 'package:intoxianimeapi/home/models/anime_post.dart';
-import 'package:intoxianimeapi/home/widgets/post_container.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:intoxianimeapi/home/domain/usecases/get_anime_post.dart';
+import 'package:intoxianimeapi/home/infra/repositories/anime_repository.dart';
+
+import 'controller/anime_controller.dart';
+import 'models/anime_model.dart';
+import 'widgets/post_container.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
-  final controller = AnimeController();
+  final controller = Modular.get<AnimeController>();
 
   @override
   Widget build(BuildContext context) {
