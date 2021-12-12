@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:intoxianimeapi/home/models/anime_post.dart';
+import 'package:intoxianimeapi/home/presenter/models/anime_model.dart';
 
 class PostContainer extends StatelessWidget {
   final AnimePost? post;
