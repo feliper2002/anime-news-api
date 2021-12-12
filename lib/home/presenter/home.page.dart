@@ -6,7 +6,7 @@ import 'models/anime_model.dart';
 import 'widgets/post_container.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
