@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
                     var metrics = scrollEnd.metrics;
                     if (metrics.atEdge) {
                       if (metrics.pixels == 0) {
+                        /// DO NOTHING
                       } else {
                         if (snapshot.connectionState == ConnectionState.done) {
                           setState(() {

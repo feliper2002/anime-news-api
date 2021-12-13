@@ -13,9 +13,7 @@ class AnimeController {
 
   int page = 1;
 
-  incrementPage() {
-    page++;
-  }
+  incrementPage() => page++;
 
   List<AnimePost> posts = <AnimePost>[];
   Future<List<AnimePost>> getAnimePost([int page = 1, int perPage = 10]) async {
