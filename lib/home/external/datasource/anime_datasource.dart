@@ -6,6 +6,8 @@ abstract class AnimeDatasource {
   Future<List<AnimePost>> getAnimePost([int page, int perPage]);
 }
 
+List<AnimePost> posts = <AnimePost>[];
+
 class AnimeDatasourceFTeam implements AnimeDatasource {
   final Dio client;
 
@@ -17,8 +19,6 @@ class AnimeDatasourceFTeam implements AnimeDatasource {
 
     final response =
         await client.get('$path/posts&page=$page&per_page=$perPage');
-
-    List<AnimePost> posts = <AnimePost>[];
 
     for (var post in response.data) {
       final animePost = AnimePost.fromMap(post);
