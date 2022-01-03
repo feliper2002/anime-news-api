@@ -6,8 +6,7 @@ import 'package:intoxianimeapi/home/posts/bloc/post_state.dart';
 import 'package:intoxianimeapi/home/presenter/models/anime_model.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {
-  PostBloc(PostState initialState, {required this.client})
-      : super(initialState) {
+  PostBloc({required this.client}) : super(const PostState()) {
     on<PostEvent>(_onFetch);
   }
 

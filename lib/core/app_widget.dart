@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intoxianimeapi/home/presenter/content.page.dart';
+import 'package:intoxianimeapi/home/presenter/home.page.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);
@@ -9,7 +11,10 @@ class AppWidget extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Intoxi Animes API',
       initialRoute: '/',
-      routes: {},
+      routes: {
+        '/': (context) => const HomePage(),
+        '/content': (context) => const ContentPage(),
+      },
     );
   }
 }
