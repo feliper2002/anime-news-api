@@ -1,4 +1,4 @@
-import 'package:intoxianimeapi/home/presenter/models/anime_model.dart';
+import 'package:intoxianimeapi/home/posts/models/anime_model.dart';
 
 enum PostStatus { initial, success, failure }
 

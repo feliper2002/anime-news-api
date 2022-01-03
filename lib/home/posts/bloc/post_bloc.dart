@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intoxianimeapi/core/error/failure.dart';
 import 'package:intoxianimeapi/home/posts/bloc/post_event.dart';
 import 'package:intoxianimeapi/home/posts/bloc/post_state.dart';
-import 'package:intoxianimeapi/home/presenter/models/anime_model.dart';
+import 'package:intoxianimeapi/home/posts/models/anime_model.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {
   PostBloc({required this.client}) : super(const PostState()) {

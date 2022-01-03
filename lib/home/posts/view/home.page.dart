@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intoxianimeapi/home/posts/bloc/post_bloc.dart';
 import 'package:intoxianimeapi/home/posts/bloc/post_event.dart';
 import 'package:intoxianimeapi/home/posts/bloc/post_state.dart';
-import 'widgets/post_container.dart';
+import 'package:intoxianimeapi/home/posts/widgets/post_container.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
