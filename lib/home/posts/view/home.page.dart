@@ -18,8 +18,8 @@ class HomePage extends StatelessWidget {
           backgroundColor: Colors.black),
       body: BlocProvider(
         // Dependency Injection
-        create: (_) =>
-            PostBloc(datasource: AnimeDatasourceFTeam(Dio()))..add(PostEvent()),
+        create: (_) => PostBloc(datasource: AnimeDatasourceFTeam(Dio()))
+          ..add(PostEventInitial()),
         child: const AnimeList(),
       ),
     );
@@ -44,7 +44,7 @@ class _AnimeListState extends State<AnimeList> {
   }
 
   _onScroll() {
-    if (_isBottom) context.read<PostBloc>().add(PostEvent());
+    if (_isBottom) context.read<PostBloc>().add(PostEventFetchMorePosts());
   }
 
   @override
@@ -67,8 +67,7 @@ class _AnimeListState extends State<AnimeList> {
       builder: (_, state) {
         switch (state.status) {
           case PostStatus.failure:
-            return const Center(
-                child: CircularProgressIndicator(color: Colors.black));
+            return _loader();
           case PostStatus.success:
             return Container(
               margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -85,10 +84,12 @@ class _AnimeListState extends State<AnimeList> {
               ),
             );
           default:
-            return const Center(
-                child: CircularProgressIndicator(color: Colors.black));
+            return _loader();
         }
       },
     );
   }
+
+  _loader() =>
+      const Center(child: CircularProgressIndicator(color: Colors.black));
 }

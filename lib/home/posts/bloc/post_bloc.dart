@@ -27,7 +27,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         ));
       }
 
-      if (page < 10) {
+      if (page < 200) {
         incrementPage();
         final posts = await datasource.getAnimePost(page);
         emit(posts.isEmpty
