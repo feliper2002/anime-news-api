@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intoxianimeapi/home/posts/bloc/post_bloc.dart';
-import 'package:intoxianimeapi/home/posts/bloc/post_event.dart';
-import 'package:intoxianimeapi/home/posts/bloc/post_state.dart';
+import 'package:intoxianimeapi/home/posts/bloc2/post_bloc.dart';
+import 'package:intoxianimeapi/home/posts/bloc2/post_event.dart';
+import 'package:intoxianimeapi/home/posts/bloc2/post_state.dart';
 import 'package:intoxianimeapi/home/posts/repository/anime_repository.dart';
 import 'package:intoxianimeapi/home/posts/widgets/post_container.dart';
 
@@ -18,8 +18,8 @@ class HomePage extends StatelessWidget {
           backgroundColor: Colors.black),
       body: BlocProvider(
         // Dependency Injection
-        create: (_) => PostBloc(repository: AnimeRepositoryFTeam(Dio()))
-          ..add(PostEventInitial()),
+        create: (_) =>
+            PostBloc(AnimeRepositoryFTeam(Dio()))..add(InitialEvent()),
         child: const AnimeList(),
       ),
     );
@@ -44,7 +44,7 @@ class _AnimeListState extends State<AnimeList> {
   }
 
   _onScroll() {
-    if (_isBottom) context.read<PostBloc>().add(PostEventFetchMorePosts());
+    if (_isBottom) context.read<PostBloc>().add(PostParameters());
   }
 
   @override
@@ -65,26 +65,26 @@ class _AnimeListState extends State<AnimeList> {
   Widget build(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
       builder: (_, state) {
-        switch (state.status) {
-          case PostStatus.failure:
-            return _loader();
-          case PostStatus.success:
-            return Container(
-              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-              child: ListView.builder(
-                controller: controller,
-                itemCount: state.posts.length,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (_, index) {
-                  final post = state.posts[index];
-                  return PostContainer(
-                    post: post,
-                  );
-                },
-              ),
-            );
-          default:
-            return _loader();
+        if (state == ErrorPostState('')) {
+          return _loader();
+        } else if (state == LoadPostState()) {
+          return _loader();
+        } else {
+          state as SucessPostState;
+          return Container(
+            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            child: ListView.builder(
+              controller: controller,
+              itemCount: state.animePosts.length,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (_, index) {
+                final post = state.animePosts[index];
+                return PostContainer(
+                  post: post,
+                );
+              },
+            ),
+          );
         }
       },
     );
