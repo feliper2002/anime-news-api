@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intoxianimeapi/home/posts/bloc/post_bloc.dart';
 import 'package:intoxianimeapi/home/posts/bloc/post_event.dart';
 import 'package:intoxianimeapi/home/posts/bloc/post_state.dart';
+import 'package:intoxianimeapi/home/posts/database/anime_database.dart';
 import 'package:intoxianimeapi/home/posts/widgets/post_container.dart';
 
 class HomePage extends StatelessWidget {
@@ -16,7 +17,9 @@ class HomePage extends StatelessWidget {
           title: const Text('Anime Posts - API'),
           backgroundColor: Colors.black),
       body: BlocProvider(
-        create: (_) => PostBloc(client: Dio())..add(PostEvent()),
+        // Dependency Injection
+        create: (_) =>
+            PostBloc(datasource: AnimeDatasourceFTeam(Dio()))..add(PostEvent()),
         child: const AnimeList(),
       ),
     );
@@ -31,6 +34,33 @@ class AnimeList extends StatefulWidget {
 }
 
 class _AnimeListState extends State<AnimeList> {
+  final controller = ScrollController();
+
+  bool get _isBottom {
+    if (!controller.hasClients) return false;
+    final maxScroll = controller.position.maxScrollExtent;
+    final currentScroll = controller.offset;
+    return currentScroll >= (maxScroll * 0.9);
+  }
+
+  _onScroll() {
+    if (_isBottom) context.read<PostBloc>().add(PostEvent());
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    controller
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
@@ -43,6 +73,7 @@ class _AnimeListState extends State<AnimeList> {
             return Container(
               margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               child: ListView.builder(
+                controller: controller,
                 itemCount: state.posts.length,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (_, index) {
