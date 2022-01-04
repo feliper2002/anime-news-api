@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intoxianimeapi/home/posts/bloc/post_bloc.dart';
 import 'package:intoxianimeapi/home/posts/bloc/post_event.dart';
 import 'package:intoxianimeapi/home/posts/bloc/post_state.dart';
-import 'package:intoxianimeapi/home/posts/database/anime_database.dart';
+import 'package:intoxianimeapi/home/posts/repository/anime_repository.dart';
 import 'package:intoxianimeapi/home/posts/widgets/post_container.dart';
 
 class HomePage extends StatelessWidget {
@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
           backgroundColor: Colors.black),
       body: BlocProvider(
         // Dependency Injection
-        create: (_) => PostBloc(datasource: AnimeDatasourceFTeam(Dio()))
+        create: (_) => PostBloc(repository: AnimeRepositoryFTeam(Dio()))
           ..add(PostEventInitial()),
         child: const AnimeList(),
       ),

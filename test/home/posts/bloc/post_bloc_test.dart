@@ -2,20 +2,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intoxianimeapi/home/posts/bloc/post_bloc.dart';
 import 'package:intoxianimeapi/home/posts/bloc/post_event.dart';
 import 'package:intoxianimeapi/home/posts/bloc/post_state.dart';
-import 'package:intoxianimeapi/home/posts/database/anime_database.dart';
 import 'package:intoxianimeapi/home/posts/models/anime_model.dart';
+import 'package:intoxianimeapi/home/posts/repository/anime_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
-class AnimeDatasourceMock extends Mock implements AnimeDatasourceFTeam {}
+class AnimeRepositoryMock extends Mock implements AnimeRepositoryFTeam {}
 
 void main() {
-  final datasource = AnimeDatasourceMock();
-  final bloc = PostBloc(datasource: datasource);
+  final repository = AnimeRepositoryMock();
+  final bloc = PostBloc(repository: repository);
 
   test(
       'Should expect values from BLoC: State, Post and Page. Simulating the page increment.',
       () async {
-    when(() => datasource.getAnimePost())
+    when(() => repository.getAnimePost())
         .thenAnswer((_) async => <AnimePost>[]);
 
     bloc.add(PostEventInitial());
