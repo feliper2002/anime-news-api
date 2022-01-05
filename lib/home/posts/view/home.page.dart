@@ -65,12 +65,9 @@ class _AnimeListState extends State<AnimeList> {
   Widget build(BuildContext context) {
     return BlocBuilder<PostBloc, PostState>(
       builder: (_, state) {
-        if (state == ErrorPostState('')) {
+        if (state is ErrorPostState) {
           return _loader();
-        } else if (state == LoadPostState()) {
-          return _loader();
-        } else {
-          state as SucessPostState;
+        } else if (state is SucessPostState) {
           return Container(
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
             child: ListView.builder(
@@ -85,6 +82,8 @@ class _AnimeListState extends State<AnimeList> {
               },
             ),
           );
+        } else {
+          return _loader();
         }
       },
     );
