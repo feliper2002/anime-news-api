@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intoxianimeapi/home/posts/bloc2/post_event.dart';
 import 'package:intoxianimeapi/home/posts/bloc2/post_state.dart';
+import 'package:intoxianimeapi/home/posts/models/anime_model.dart';
 import 'package:intoxianimeapi/home/posts/repository/anime_repository.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {
@@ -14,7 +15,9 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   int page = 1;
   incrementPage() => page++;
 
-  Future _getPosts(PostParameters event, Emitter<PostState> emit) async {
+  Future<void> _getInitialPosts(
+      InitialEvent event, Emitter<PostState> emit) async {
+    emit(LoadPostState());
     try {
       final posts = await repository.getAnimePost();
       emit(SucessPostState(posts));
@@ -23,8 +26,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     }
   }
 
-  Future _getInitialPosts(InitialEvent event, Emitter<PostState> emit) async {
-    emit(LoadPostState());
+  Future<void> _getPosts(PostParameters event, Emitter<PostState> emit) async {
+    if (page < 200) incrementPage();
     try {
       final posts = await repository.getAnimePost();
       emit(SucessPostState(posts));
