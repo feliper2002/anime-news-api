@@ -1,22 +1,21 @@
 import 'package:dio/dio.dart';
 import 'package:intoxianimeapi/core/error/failure.dart';
-import 'package:intoxianimeapi/home/presenter/models/anime_model.dart';
+import 'package:intoxianimeapi/home/posts/models/anime_model.dart';
 
-abstract class AnimeDatasource {
+abstract class AnimeRepository {
   Future<List<AnimePost>> getAnimePost([int page, int perPage]);
 }
 
-List<AnimePost> posts = <AnimePost>[];
-
-class AnimeDatasourceFTeam implements AnimeDatasource {
+class AnimeRepositoryFTeam implements AnimeRepository {
   final Dio client;
 
-  AnimeDatasourceFTeam(this.client);
+  AnimeRepositoryFTeam(this.client);
 
   @override
   Future<List<AnimePost>> getAnimePost([int page = 1, int perPage = 10]) async {
     const path = 'https://www.intoxianime.com/?rest_route=/wp/v2';
 
+    List<AnimePost> posts = <AnimePost>[];
     final response =
         await client.get('$path/posts&page=$page&per_page=$perPage');
 

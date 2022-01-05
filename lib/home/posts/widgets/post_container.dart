@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
-import 'package:intoxianimeapi/home/presenter/models/anime_model.dart';
+import 'package:intoxianimeapi/home/posts/models/anime_model.dart';
 
 class PostContainer extends StatelessWidget {
   final AnimePost? post;
@@ -11,7 +10,7 @@ class PostContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Modular.to.pushNamed('/content', arguments: {
+        Navigator.pushNamed(context, '/content', arguments: {
           'title': post!.title!,
           'content': post!.content!,
         });
