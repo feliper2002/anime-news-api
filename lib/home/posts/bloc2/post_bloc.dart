@@ -30,11 +30,17 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   Future<void> _getPosts(PostParameters event, Emitter<PostState> emit) async {
     if (page < 200) incrementPage();
+    late List<AnimePost> newPosts;
     try {
-      posts.addAll(await repository.getAnimePost(page));
+      newPosts = await repository.getAnimePost(page);
+      if (newPosts.isNotEmpty) {
+        posts.addAll(newPosts);
+      }
       emit(SucessPostState(posts));
     } catch (e) {
-      emit(ErrorPostState(e.toString()));
+      if (newPosts.isEmpty) {
+        emit(ErrorPostState(e.toString()));
+      }
     }
   }
 }

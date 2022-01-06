@@ -19,9 +19,11 @@ class AnimeRepositoryFTeam implements AnimeRepository {
     final response =
         await client.get('$path/posts&page=$page&per_page=$perPage');
 
-    for (var post in response.data) {
-      final animePost = AnimePost.fromMap(post);
-      posts.add(animePost);
+    if (response.statusCode == 200) {
+      for (var post in response.data) {
+        final animePost = AnimePost.fromMap(post);
+        posts.add(animePost);
+      }
     }
     try {
       return posts;

@@ -66,8 +66,20 @@ class _AnimeListState extends State<AnimeList> {
     return BlocBuilder<PostBloc, PostState>(
       builder: (_, state) {
         if (state is ErrorPostState) {
-          return _loader();
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text('Opps! We´re having some error on loading...'),
+              const CircularProgressIndicator(color: Colors.black),
+              Text(state.message),
+            ],
+          );
         } else if (state is SucessPostState) {
+          if (state.animePosts.isEmpty) {
+            return const Center(child: Text('No more posts to see.'));
+          }
+
           return Container(
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
             child: ListView.builder(
